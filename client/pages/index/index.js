@@ -148,7 +148,6 @@ Page({
   }
   /*上传文件函数*/
   , uploadToServer: function (file) {
-    this.wechatlogin();
     wx.uploadFile({
       url: '这里填写server文件夹中index.php上传到远程服务器的链接',
       filePath: file,
