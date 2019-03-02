@@ -5,4 +5,4 @@
 使用前,请先把修改/server/mysql.config.php中的数据库配置,/upload文件夹权限设置为可写入,
 修改/client/pages/index/index.js中的url
 
-目前功能比较简单,也可能存在bug,欢迎提交issue
+目前功能比较简单,也可能存在bug,欢迎提交issues
