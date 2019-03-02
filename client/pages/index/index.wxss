@@ -1,0 +1,4 @@
+/* pages/index/index.wxss */
+view{
+  padding: 15px;
+}
