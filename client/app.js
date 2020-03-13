@@ -5,7 +5,7 @@ App({
      success(res){
        if(res.code){
          wx.request({
-           url:'https://www.haixiaowen.com/wechat/miniapp.recorder/login',
+           url:'https://172.16.0.12/wechat/miniapp.recorder/login',
            data:{
              code:res.code
            },
