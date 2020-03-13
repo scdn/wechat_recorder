@@ -17,7 +17,7 @@ Page({
     var nick=wx.getStorageSync('nick');
     //console.log(openid);
     wx.request({
-      url: 'https://www.haixiaowen.com/wechat/miniapp.recorder/read',
+      url: 'https://172.16.0.12/wechat/miniapp.recorder/read',
       data:{
         'openid':openid,
         'nick':nick
@@ -63,8 +63,7 @@ Page({
       title:'加载中'
     })
     wx.request({
-      url:'https://www.haixiaowen.com/wechat/miniapp.recorder/read',
-      //url: 'http://172.16.0.62/wechat/miniapp.recorder/read',
+      url: 'http://172.16.0.62/wechat/miniapp.recorder/read',
       data:{
         'openid': openid,
         'nick': nick
@@ -111,8 +110,7 @@ Page({
       title: '加载中'
     })
     wx.request({
-      url: 'https://www.haixiaowen.com/wechat/miniapp.recorder/read',
-      //url: 'http://172.16.0.62/wechat/miniapp.recorder/read',
+      url: 'http://172.16.0.62/wechat/miniapp.recorder/read',
       data: {
         'openid': openid,
         'nick': nick
