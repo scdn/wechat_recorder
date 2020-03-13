@@ -7,22 +7,24 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
 
   onLoad: function (options) {
+    
     var that = this;
     this.recorderManager = wx.getRecorderManager();
     this.recorderManager.onError(function(){
       wx.showToast({
         title: '录音失败',
+        icon:'none'
       })
     });
     this.recorderManager.onStop(function(res){
       that.setData({
         src: res.tempFilePath
-      })
-      console.log(res.tempFilePath )
+      });
+      console.log(res.tempFilePath);
       wx.showToast({
         title: '录音成功',
       })
@@ -30,9 +32,58 @@ Page({
 
     this.innerAudioContext = wx.createInnerAudioContext();
     this.innerAudioContext.onError((res) => {
-      that.tip("播放录音失败！")
+      wx.showToast({
+        title: '请先录音',
+        icon:'none'
+      })
     })
-    this.wechatlogin();
+    
+   // this.wechatlogin();
+   /**授权登录 开始**/
+    wx.getSetting({
+      success(res) {
+        if (res.authSetting['scope.userInfo']) {
+          wx.getUserInfo({
+            success: function (res) {
+              wx.setStorage({
+                key: 'nick',
+                data: res.userInfo.nickName
+              })
+              console.log(res.userInfo.nickName);
+            }
+          })
+        }
+      }
+      /**失败 开始**/
+      
+      ,fail(res) {
+        wx.showModal({
+          title: '授权失败',
+          content: '请开启"使用我的用户信息"',
+          confirmText: '去设置',
+          success(res) {
+            res.confirm && wx.openSetting({
+              success: function (res) {
+                res.authSetting['scope.userInfo'] && wx.getUserInfo({
+                  success: function (res) {
+                    wx.setStorage({
+                      key: 'nick',
+                      data: res.userInfo.nickName
+                    })
+                  }
+                })
+
+              }
+            })
+          }
+        })
+      }
+    
+    
+  
+      /**失败结束 */
+    })
+   /**授权登录 结束 */
   },
 
   /**
@@ -82,9 +133,9 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  }, 
 /**微信登录并获取userinfo*/
-  , wechatlogin: function () {
+  wechatlogin: function () {
     wx.login({
       success(res) {
         wx.showToast({
@@ -92,86 +143,98 @@ Page({
         })
         }
         })
-  }
-
+  }, 
   /**
   * 提示
   */
-  , tip: function (msg) {
+  tip: function (msg) {
     wx.showModal({
       title: '提示',
       content: msg,
       showCancel: false
     })
-  }
+  },
 
   /**
    * 录制mp3音频
   */
-  , startRecordMp3: function () {
+ startRecord: function () {
     this.recorderManager.start({
       format: 'mp3'
     });
-  }
-
+  },
   /**
    * 停止录音
    */
-  ,stopRecord: function(){
+  stopRecord: function(){
     this.recorderManager.stop()
-  }
-
+  }, 
   /**
    * 播放录音
    */
-  , playRecord: function(){
+  playRecord: function(){
     var that = this;
-    var src = this.data.src;
-    if (src == '') {
+    //var src = this.data.src;
+    if (that.data.src == '') {
       this.tip("请先录音！")
       return;
     }
-    this.innerAudioContext.src = this.data.src;
+    console.log(that.data.src);
+    this.innerAudioContext.src = that.data.src;
     this.innerAudioContext.play()
-  }
-  /*
-显示文件路径
-*/
-  , showfilepath: function () {
+  },
+  /**结束播放 */
+  stopPlay:function(){
+    var that=this;
+    this.innerAudioContext.src = that.data.src;
+    this.innerAudioContext.stop()
+  },
+  /**播放/暂停切换**/
+  mainHandle: function () {
     var that = this;
-    var src = this.data.src;
-    if (src == '') {
-      this.tip("请先录音！")
-      return;
+    console.log('测试' + that.data.src);
+    if (that.data.src.paused) {
+      that.data.src.play;
+      that.setData({
+        test: '123'
+      })
     }
-    this.tip(src)
   }
   /*上传文件函数*/
-  , uploadToServer: function (file) {
+   /*上传文件函数*/
+   ,uploadToServer: function (file) {
     wx.uploadFile({
-      url: '这里填写server文件夹中index.php上传到远程服务器的链接',
+      url: 'https://www.haixiaowen.com/wechat/miniapp.recorder',
+      //url:'http://172.16.0.62/wechat/miniapp.recorder',
       filePath: file,
       name: 'file',
-      formData:{
-       //formdata
+      formData: {
+        'nick':wx.getStorageSync('nick'),
+        'openid':wx.getStorageSync('openid')
       },
-      success(file){
+      success(res) {
         wx.showToast({
-          title: '恭喜,上传成功',
-        })
+          title:res.data,
+          //title: '恭喜,上传成功',
+        }),
+        console.log(res);
       },
-      fail(file){
+      fail(res) {
         wx.showToast({
-          title: '上传失败',
+          title: '请先录音',
+          icon:'none'
         })
       }
     })
   }
   /**上传文件 **/
-  , readyUpload:function(){
-     //var that=this;
-     var src=this.data.src;
-     this.uploadToServer(src)
+  , readyUpload: function () {
+    //var that=this;
+    var src = this.data.src;
+    this.uploadToServer(src)
+  },
+  bindGetUserInfo:function(e){
+    console.log(e.detail.userInfo)
   }
 
 })

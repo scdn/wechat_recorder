@@ -1,15 +1,28 @@
+<view class="container">
+<!--
 <view>
-  <button bindtap='startRecordMp3' type='primary'>录音开始（mp3）</button>
+<textarea class="weui-textarea" placeholder="您可以在这里输入您要录音的文本" maxlength="-1"></textarea>
 </view>
-<view>
-  <button bindtap='stopRecord' type='primary'>录音结束</button>
+-->
+<view bind:touchstart="startRecord" catchtap="longpress" bindtouchend="stopRecord" bindtouchcancel="stopRecord">
+  <button type='primary'>长按开始录音</button>
 </view>
 <view>
   <button bindtap='playRecord' type='primary'>播放录音</button>
 </view>
 <view>
-<button bindtap='showfilepath' type='primary'>显示录音文件路径</button>
+<button bindtap='stopPlay' type='primary'>结束播放</button>
 </view>
+<!--
 <view>
-<button bindtap='readyUpload' type='primary'>上传文件</button>
+<button bindtap='readyUpload' type='primary'>确认发布</button>
+</view>-->
+<view>
+<button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="readyUpload">确认保存</button>
+</view>
+<view></view>
+<view id="ad">
+<ad unit-id="adunit-d3f6f56fb07d424b"></ad>
+</view>
+
 </view>

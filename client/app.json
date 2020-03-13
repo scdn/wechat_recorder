@@ -1,11 +1,25 @@
 {
-  "pages":[
-    "pages/index/index"   
+  "pages": [
+    "pages/index/index",
+    "pages/my/index"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "录音小程序",
-    "navigationBarTextStyle":"black"
-  }
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar":{
+    "list":[
+      {
+        "pagePath":"pages/index/index",
+        "text":"录音"
+      },
+      {
+        "pagePath":"pages/my/index",
+        "text":"我的"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
 }

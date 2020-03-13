@@ -1,4 +1,9 @@
 /* pages/index/index.wxss */
+
 view{
   padding: 15px;
+}
+textarea{
+  border: 1px solid #ccc;
+  height:400rpx;
 }

@@ -1,0 +1,7 @@
+/* pages/my/index.wxss */
+view{
+  padding: 15px;
+}
+ad{
+  padding-bottom: 8px;
+}
