@@ -204,8 +204,7 @@ Page({
    /*上传文件函数*/
    ,uploadToServer: function (file) {
     wx.uploadFile({
-      url: 'https://www.haixiaowen.com/wechat/miniapp.recorder',
-      //url:'http://172.16.0.62/wechat/miniapp.recorder',
+      url:'http://172.16.0.62/wechat/miniapp.recorder',
       filePath: file,
       name: 'file',
       formData: {
