@@ -9,4 +9,4 @@
 
 小程序Demo展示:
 
-![qrcode](https://blog.haixiaowen.com/qrcode.png)
+!(https://blog.haixiaowen.com/qrcode.png)
